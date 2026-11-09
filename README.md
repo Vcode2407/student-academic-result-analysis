@@ -1,6 +1,6 @@
 # Student Academic Result Analysis System
 
-A small Python terminal project for recording marks, calculating results, checking errors, viewing class summaries, drawing a subject chart, and exporting a CSV report.
+A small Python desktop and terminal project for recording marks, calculating results, checking errors, viewing class summaries, drawing a subject chart, and exporting a CSV report.
 
 ## Explain it in class
 
@@ -18,13 +18,27 @@ python -m pip install -r requirements.txt
 python main.py
 ```
 
+For the desktop interface, run `python gui.py` instead. Enter the registration
+number and four marks, click **Add student**, then select the saved row to see its
+result. The **Class summary**, **Subject chart**, and **Save CSV report** buttons
+show the other features. The saved report is `data/results.csv`.
+
 `matplotlib` is needed only for the chart. All other options use Python's standard library. The program creates `data/marks.csv` when a student is added and `data/results.csv` when results are exported. These files stay on your computer.
 
 ## Example for a class demonstration
 
 Enter registration `AP26122050024` and the **illustrative** marks: Python 82, Algorithms 76, Network Security 91, Database 65. The displayed result is 314/400, 78.5%, B, Pass. These are sample marks, not an academic record.
 
-Try 105 as one mark to show the validation message. Add a second student, then choose Class summary to show the averages and pass percentage. Choose Show chart to save a PNG under `data/`.
+Try 105 as one mark to show the validation message. Add a second student, then choose **Class summary** to show the averages and pass percentage. Choose **Subject chart** to show a chart and save a PNG under `data/`.
+
+## Interface screenshots
+
+The sample marks shown here are illustrative. Click any image to view it at full size.
+
+- [Student entry and saved records](screenshots/01_interface.jpg)
+- [Individual result](screenshots/02_result.jpg)
+- [Class summary](screenshots/03_class_summary.jpg)
+- [Subject chart](screenshots/04_subject_chart.jpg)
 
 ## Example grading rules
 
@@ -33,8 +47,10 @@ Each of the four subjects is out of 100. Passing requires at least 40 in **every
 ## Files
 
 - `main.py`: interactive terminal menu and chart.
+- `gui.py`: desktop interface for the same project.
 - `result_system.py`: validation, calculations, class analysis, and CSV storage.
 - `tests/test_result_system.py`: normal, boundary, failure, and file tests.
 - `requirements.txt`: chart dependency.
+- `screenshots/`: demonstration images of the desktop interface.
 
 Run tests with `python -m unittest discover -s tests -v`.
