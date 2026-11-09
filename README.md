@@ -2,6 +2,12 @@
 
 A small Python terminal project for recording marks, calculating results, checking errors, viewing class summaries, drawing a subject chart, and exporting a CSV report.
 
+## Explain it in class
+
+“First I enter a registration number and four subject marks. The program checks that every mark is between 0 and 100. It adds the marks and calculates the percentage. If any subject is below 40, the student fails; otherwise it chooses a grade. It can also show class averages, draw a chart, and save the results.”
+
+The main code to explain is `calculate_result()` in `result_system.py`. `main.py` only shows the menu and asks the user what to do. The CSV functions save and reopen records.
+
 ## Run
 
 Requires Python 3.10 or newer. In PowerShell:

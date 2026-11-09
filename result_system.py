@@ -2,7 +2,6 @@
 
 import csv
 import math
-import re
 from pathlib import Path
 
 SUBJECTS = ("Python", "Algorithms", "Network Security", "Database")
@@ -15,8 +14,13 @@ def validate_record(registration, marks):
     registration = registration.strip()
     if not registration:
         raise ValueError("Registration number cannot be blank.")
-    if not re.fullmatch(r"[A-Za-z0-9_-]+", registration):
+    if not all(character.isalnum() or character in "-_" for character in registration):
         raise ValueError("Registration number may contain only letters, digits, - and _.")
+    return registration, validate_marks(marks)
+
+
+def validate_marks(marks):
+    """Check all four marks before using them in a result."""
     if set(marks) != set(SUBJECTS):
         raise ValueError("Enter one mark for each of the four subjects.")
     clean = {}
@@ -28,40 +32,48 @@ def validate_record(registration, marks):
         if not math.isfinite(value) or not 0 <= value <= MAX_MARK:
             raise ValueError(f"{subject}: mark must be from 0 to 100.")
         clean[subject] = value
-    return registration, clean
+    return clean
 
 
 def calculate_result(marks):
-    _, clean = validate_record("temporary", marks)
+    """Turn one student's marks into a total, percentage, and grade."""
+    clean = validate_marks(marks)
     total = sum(clean.values())
-    percentage = total / (len(SUBJECTS) * MAX_MARK) * 100
+    percentage = total / 400 * 100
     if min(clean.values()) < PASS_MARK:
         grade, status = "F", "Fail"
     else:
-        status = "Pass"
-        grade = next(
-            label for threshold, label in
-            ((90, "A+"), (80, "A"), (70, "B"), (60, "C"), (40, "D"))
-            if percentage >= threshold
-        )
+        # Check the highest grade first, just like the presentation shows.
+        for limit, label in [(90, "A+"), (80, "A"), (70, "B"),
+                             (60, "C"), (40, "D")]:
+            if percentage >= limit:
+                grade, status = label, "Pass"
+                break
     return {"total": total, "percentage": percentage,
             "grade": grade, "status": status}
 
 
 def class_summary(records):
+    """Find averages, pass percentage, and the highest result in a class."""
     if not records:
         return None
-    results = {reg: calculate_result(marks) for reg, marks in records.items()}
     count = len(records)
+    results = {registration: calculate_result(marks)
+               for registration, marks in records.items()}
     highest = max(result["total"] for result in results.values())
+    passed = sum(result["status"] == "Pass" for result in results.values())
+    subject_averages = {}
+    for subject in SUBJECTS:
+        subject_total = sum(marks[subject] for marks in records.values())
+        subject_averages[subject] = subject_total / count
     return {
         "students": count,
-        "class_average": sum(r["percentage"] for r in results.values()) / count,
-        "pass_percentage": 100 * sum(r["status"] == "Pass" for r in results.values()) / count,
-        "subject_averages": {subject: sum(marks[subject] for marks in records.values()) / count
-                             for subject in SUBJECTS},
+        "class_average": sum(result["percentage"] for result in results.values()) / count,
+        "pass_percentage": passed / count * 100,
+        "subject_averages": subject_averages,
         "highest_total": highest,
-        "highest_students": [reg for reg, result in results.items() if result["total"] == highest],
+        "highest_students": [registration for registration, result in results.items()
+                             if result["total"] == highest],
     }
 
 
