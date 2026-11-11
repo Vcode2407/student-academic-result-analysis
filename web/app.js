@@ -65,6 +65,35 @@ function renderSummary(summary) {
     <p class="analysis-highest">Highest total: <strong>${summary.highest_total.toFixed(0)} / 400</strong> · ${summary.highest_students.map(escapeHtml).join(", ")}</p>`;
 }
 
+function renderComparison() {
+  const area = document.querySelector("#comparison-content");
+  if (records.length < 2) {
+    area.className = "empty-state";
+    area.textContent = "Add at least two students to compare their results.";
+    return;
+  }
+  area.className = "";
+  const ranked = [...records].sort((a, b) => b.result.percentage - a.result.percentage);
+  const failures = ranked.flatMap(({registration, marks, result}) => {
+    if (result.status !== "Fail") return [];
+    const low = subjects.filter(subject => marks[subject] < 40);
+    return [`${registration} fails because ${low.map(subject => `${subject} (${marks[subject]})`).join(", ")} ${low.length === 1 ? "is" : "are"} below 40.`];
+  });
+  const demoNote = ranked.some(({registration}) => registration.startsWith("DEMO_"))
+    ? "DEMO records use sample marks." : "";
+  area.innerHTML = `
+    <p class="analysis-note">Ranked by percentage. Pass or fail still depends on every subject mark.</p>
+    ${ranked.map(({registration, result}) => `
+      <div class="compare-row">
+        <strong>${escapeHtml(registration)}</strong>
+        <div class="bar-track"><div class="bar-fill ${result.status === "Fail" ? "fail-bar" : ""}" style="width:${result.percentage}%"></div></div>
+        <b>${result.percentage.toFixed(1)}%</b>
+        <span class="status ${result.status === "Fail" ? "fail" : ""}">${escapeHtml(result.grade)} · ${escapeHtml(result.status)}</span>
+      </div>`).join("")}
+    <p class="comparison-note">Highest result: <strong>${escapeHtml(ranked[0].registration)}</strong> with ${ranked[0].result.percentage.toFixed(1)}%.
+    ${failures.map(escapeHtml).join(" ")} ${demoNote}</p>`;
+}
+
 async function refresh() {
   records = await getJson("/api/records");
   const summary = await getJson("/api/summary");
@@ -72,6 +101,7 @@ async function refresh() {
   document.querySelector("#stat-average").textContent = summary ? `${summary.class_average.toFixed(1)}%` : "—";
   document.querySelector("#stat-pass").textContent = summary ? `${summary.pass_percentage.toFixed(1)}%` : "—";
   renderSummary(summary);
+  renderComparison();
   renderRecords();
   if (selected) showResult(selected);
 }

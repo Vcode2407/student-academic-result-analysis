@@ -30,6 +30,12 @@ click **Export CSV** to download the results. The class analysis section shows
 subject averages and the highest total. Keep the terminal open while using
 the website. This localhost address works on your computer only.
 
+The **Compare students** section ranks saved results by percentage and still
+shows the pass/fail decision. Two illustrative records demonstrate different
+outcomes: `DEMO_A` has marks 92, 88, 94, 90 (91.0%, A+, Pass), while `DEMO_B`
+has 78, 72, 35, 85 (67.5%, F, Fail because Network Security is below 40).
+These demo marks are not real student records.
+
 `matplotlib` is needed only for the chart. All other options use Python's standard library. The program creates `data/marks.csv` when a student is added and `data/results.csv` when results are exported. These files stay on your computer.
 
 ## Example for a class demonstration
@@ -48,6 +54,8 @@ The sample marks shown here are illustrative. Click any image to view it at full
 - [Subject chart](screenshots/04_subject_chart.jpg)
 - [Local website](screenshots/05_local_website.png)
 - [Local website on a phone-sized screen](screenshots/06_local_website_mobile.png)
+- [Three-student comparison](screenshots/07_comparison.png)
+- [Failed-subject example](screenshots/08_failed_subject.png)
 
 ## Example grading rules
 
