@@ -1,6 +1,6 @@
 # Student Academic Result Analysis System
 
-A small Python desktop and terminal project for recording marks, calculating results, checking errors, viewing class summaries, drawing a subject chart, and exporting a CSV report.
+A small Python project with a local website, desktop interface, and terminal menu for recording marks, calculating results, viewing class analysis, drawing charts, and exporting a CSV report.
 
 ## Explain it in class
 
@@ -23,6 +23,13 @@ number and four marks, click **Add student**, then select the saved row to see i
 result. The **Class summary**, **Subject chart**, and **Save CSV report** buttons
 show the other features. The saved report is `data/results.csv`.
 
+For the local website, run `python web_app.py` from the project folder and open
+<http://127.0.0.1:8765/> in a browser. The website uses the same `data/marks.csv`
+records as the desktop program. Select a student to see the subject chart, or
+click **Export CSV** to download the results. The class analysis section shows
+subject averages and the highest total. Keep the terminal open while using
+the website. This localhost address works on your computer only.
+
 `matplotlib` is needed only for the chart. All other options use Python's standard library. The program creates `data/marks.csv` when a student is added and `data/results.csv` when results are exported. These files stay on your computer.
 
 ## Example for a class demonstration
@@ -39,6 +46,8 @@ The sample marks shown here are illustrative. Click any image to view it at full
 - [Individual result](screenshots/02_result.jpg)
 - [Class summary](screenshots/03_class_summary.jpg)
 - [Subject chart](screenshots/04_subject_chart.jpg)
+- [Local website](screenshots/05_local_website.png)
+- [Local website on a phone-sized screen](screenshots/06_local_website_mobile.png)
 
 ## Example grading rules
 
@@ -48,9 +57,10 @@ Each of the four subjects is out of 100. Passing requires at least 40 in **every
 
 - `main.py`: interactive terminal menu and chart.
 - `gui.py`: desktop interface for the same project.
+- `web_app.py` and `web/`: local website and its browser files.
 - `result_system.py`: validation, calculations, class analysis, and CSV storage.
 - `tests/test_result_system.py`: normal, boundary, failure, and file tests.
 - `requirements.txt`: chart dependency.
-- `screenshots/`: demonstration images of the desktop interface.
+- `screenshots/`: demonstration images of the desktop interface and website.
 
 Run tests with `python -m unittest discover -s tests -v`.

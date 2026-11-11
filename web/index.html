@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Academic Result Analysis System</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-mark">SR</div>
+      <div class="brand-copy"><strong>Student Academic<br>Result Analysis</strong><span>LOCAL PROJECT DEMO</span></div>
+      <div class="topbar-right"><span class="live-dot"></span> Running on localhost</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div><p class="eyebrow">ACADEMIC RESULTS  /  DASHBOARD</p>
+        <h1>Results, made <em>clear.</em></h1>
+        <p class="intro">Enter marks, calculate a result, review class performance, and export a report in one place.</p>
+      </div>
+      <div class="hero-note"><span>PROJECT RULE</span><strong>40 / 100</strong><p>Minimum in each subject to pass</p></div>
+    </section>
+
+    <div class="layout">
+      <section class="panel entry-panel" aria-labelledby="entry-title">
+        <div class="panel-heading"><div><p class="section-number">01 / NEW RECORD</p><h2 id="entry-title">Enter student marks</h2></div></div>
+        <form id="student-form" novalidate>
+          <label for="registration">Registration number</label>
+          <input id="registration" name="registration" placeholder="e.g. AP26122050024" required autocomplete="off">
+          <div class="form-divider"><span>SUBJECT MARKS</span><span>OUT OF 100</span></div>
+          <label for="python">Python</label><input id="python" name="Python" type="number" min="0" max="100" step="any" placeholder="0 – 100" required>
+          <label for="algorithms">Algorithms</label><input id="algorithms" name="Algorithms" type="number" min="0" max="100" step="any" placeholder="0 – 100" required>
+          <label for="network">Network Security</label><input id="network" name="Network Security" type="number" min="0" max="100" step="any" placeholder="0 – 100" required>
+          <label for="database">Database</label><input id="database" name="Database" type="number" min="0" max="100" step="any" placeholder="0 – 100" required>
+          <button class="primary-button" type="submit">Calculate &amp; save result <span>→</span></button>
+          <p id="form-message" class="form-message" role="status"></p>
+        </form>
+      </section>
+
+      <div class="main-column">
+        <section class="stats" aria-label="Class statistics">
+          <div class="stat-card"><span>STUDENTS</span><strong id="stat-students">—</strong><small>records saved</small></div>
+          <div class="stat-card"><span>CLASS AVERAGE</span><strong id="stat-average">—</strong><small>across all subjects</small></div>
+          <div class="stat-card"><span>PASS RATE</span><strong id="stat-pass">—</strong><small>40+ in every subject</small></div>
+        </section>
+
+        <section class="panel records-panel" aria-labelledby="records-title">
+          <div class="panel-heading horizontal"><div><p class="section-number">02 / STUDENT RECORDS</p><h2 id="records-title">Saved results</h2></div><a class="outline-button" href="/api/report">↓ Export CSV</a></div>
+          <div class="table-wrap"><table><thead><tr><th>REGISTRATION</th><th>TOTAL</th><th>PERCENTAGE</th><th>GRADE</th><th>STATUS</th></tr></thead><tbody id="records-body"><tr><td colspan="5">Loading records…</td></tr></tbody></table></div>
+          <p class="table-hint">Select a row to see the complete result and subject chart.</p>
+        </section>
+
+        <section class="panel detail-panel" aria-labelledby="detail-title">
+          <div class="panel-heading"><p class="section-number">03 / RESULT BREAKDOWN</p><h2 id="detail-title">Student result</h2></div>
+          <div id="detail-content" class="empty-state">Select a student from the table to view their result.</div>
+        </section>
+
+        <section class="panel analysis-panel" aria-labelledby="analysis-title">
+          <div class="panel-heading"><p class="section-number">04 / CLASS ANALYSIS</p><h2 id="analysis-title">Subject averages</h2></div>
+          <div id="analysis-content" class="empty-state">Add a student to see the class analysis.</div>
+        </section>
+      </div>
+    </div>
+    <p class="footnote">Sample grading bands for this project: A+ 90+, A 80+, B 70+, C 60+, D 40+. A mark below 40 in any subject means Fail. These are example rules, not official university grades.</p>
+  </main>
+</body>
+</html>
