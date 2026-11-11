@@ -96,6 +96,48 @@ with open("student_results.csv", encoding="utf-8") as file:
 '''),
 ]
 
+EXPLANATIONS = [
+    """**What this code does**
+
+- `SUBJECTS` lists the four subjects. Each mark must be between 0 and 100; otherwise the function shows an error.
+- `sum(marks.values())` adds the four marks. Dividing by `4` gives the percentage because each subject is out of 100.
+- `any(mark < 40 ...)` checks whether even one subject is below 40. If so, the function returns **F, Fail** immediately.
+- If every subject passes, the `if`/`elif` statements choose the grade from the percentage. `return` sends back total, percentage, grade, and status.
+
+**Example:** marks of 82, 76, 91, and 65 give 314/400, or 78.5%, which is B and Pass.""",
+    """**What this code does**
+
+- `students` is a dictionary. Each registration number points to another dictionary of four subject marks.
+- `DEMO_A` and `DEMO_B` are made-up records for showing two different outcomes.
+- `len(students)` counts how many example students were entered.
+
+Change these marks to try your own examples, keeping each mark between 0 and 100.""",
+    """**What this code does**
+
+- The `for` loop takes one registration number and its marks at a time.
+- `calculate_result(marks)` applies the same grading rules to each student.
+- The four values returned by the function are put into `total`, `percentage`, `grade`, and `status`.
+- The `print` line displays one complete result. `:.1f` shows the percentage with one digit after the decimal point.""",
+    """**What this code does**
+
+- `sorted(..., reverse=True)` puts the highest percentage first. In `item[1][1]`, the first `[1]` selects the result tuple and the second `[1]` selects its percentage.
+- `enumerate(..., start=1)` adds ranking numbers 1, 2, and 3.
+- The class average is the mean of the three percentages. The pass rate counts the students with status `Pass`, divides by the number of students, and multiplies by 100.
+- `DEMO_B` still fails at 67.5% overall because its Network Security mark is 35, below the required 40.""",
+    """**What this code does**
+
+- `matplotlib.pyplot` draws the chart. `names` and `percentages` supply the labels and bar heights.
+- Passing students get red bars; a student who failed gets a gray bar.
+- `bar_label` writes each percentage above its bar. `ylim(0, 100)` keeps the scale from 0 to 100.
+- `tight_layout()` makes the labels fit, and `show()` displays the chart.""",
+    """**What this code does**
+
+- `csv.writer` creates a CSV report that a spreadsheet can open.
+- The first `writerow` writes the column headings. The loop writes one result row per student.
+- Opening the file with `newline=""` prevents extra blank lines in CSV files on Windows.
+- The last `with open(...)` reads the saved file so you can see what was written. Each `with` closes its file automatically.""",
+]
+
 
 def md(source):
     return {"cell_type": "markdown", "metadata": {}, "source": source}
@@ -133,6 +175,7 @@ def build():
                                     "data": {"image/png": base64.b64encode(image.getvalue()).decode("ascii")}})
                     plt.close("all")
                 cells.append(code_cell(source, number, outputs))
+                cells.append(md(EXPLANATIONS[number - 1]))
         finally:
             os.chdir(previous)
     notebook = {"nbformat": 4, "nbformat_minor": 4, "cells": cells,
