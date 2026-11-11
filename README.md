@@ -6,6 +6,10 @@ A small Python project with a local website, desktop interface, and terminal men
 
 “First I enter a registration number and four subject marks. The program checks that every mark is between 0 and 100. It adds the marks and calculates the percentage. If any subject is below 40, the student fails; otherwise it chooses a grade. It can also show class averages, draw a chart, and save the results.”
 
+For a short, runnable explanation of the calculation and comparison, open
+[`Student_Result_System_Working.ipynb`](Student_Result_System_Working.ipynb) in
+Jupyter or Google Colab. It includes example output and a comparison chart.
+
 The main code to explain is `calculate_result()` in `result_system.py`. `main.py` only shows the menu and asks the user what to do. The CSV functions save and reopen records.
 
 ## Run
